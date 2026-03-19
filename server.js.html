@@ -1,0 +1,24 @@
+const express = require("express");
+const app = express();
+const cors = require("cors");
+
+app.use(cors());
+app.use(express.json());
+
+let users = {};
+
+app.post("/reward", (req, res) => {
+  let user = req.body.user;
+
+  if (!users[user]) users[user] = 0;
+
+  users[user] += 1;
+
+  res.json({ balance: users[user] });
+});
+
+app.get("/", (req,res)=>{
+  res.send("Server Running");
+});
+
+app.listen(3000, () => console.log("Server running"));
